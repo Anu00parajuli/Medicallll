@@ -217,7 +217,7 @@ hr {
       
     </div>
   </form>
-</div>
+<!-- </div> -->
 
 <script>
 // Get the modal

@@ -1,5 +1,6 @@
 <?php
 include('./tables_columns_name.php');
+require "./connection.php";
 function protect($data){
     return trim(strip_tags(addslashes($data)));
 }
@@ -45,7 +46,7 @@ if(isset($_POST['login'])){
     }else{
         $user = encryptData($user, $key, $str);    
         $email_sql = "SELECT $password_column, $emailVerification_column  FROM doctor_registration WHERE $email_column = '$user';";
-        $result = mysqli_query($con, $email_sql);
+        $result = mysqli_query($connect, $email_sql);
         
         if(mysqli_num_rows($result) > 0){
             $row = mysqli_fetch_assoc($result);
@@ -65,7 +66,7 @@ if(isset($_POST['login'])){
                 header("location: ./doctor_login.php?inputError=WrongRegistrationNumberORPass#loginForm");
             }
         }else{
-            header("location: ./doctor_login.php?inputError=WrongRegistrationNumberOrUser#loginForm");
+            header("location: ./doctor_homepage.php?inputError=WrongRegistrationNumberOrUser#loginForm");
         }
     }
 

@@ -19,7 +19,7 @@ if(isset($_POST['signup'])){
     $_SESSION['formdata'] = $_POST ;
 
     // data from the signup form
-    $registration_no =$_POST['registration_no'];
+    $nmc_no =$_POST['nmc_no'];
     $first_name = protect($_POST['first_name']);
     $last_name = protect($_POST['last_name']);
     $email = protect($_POST['email']);
@@ -36,15 +36,15 @@ if(isset($_POST['signup'])){
 
         $str = "/6G6F;WvK7;s{au/6G6F;WvK7;s{au";
         $key = md5($str);
-        $EncryptedRegistration_no = encryptData($registration_no, $key, $str);
+        $EncryptedNmc_no = encryptData($nmc_no, $key, $str);
         $EncryptedEmail = encryptData($email, $key, $str);
         $EncryptedPhonenumber = encryptData($contact_number, $key, $str);
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sql_registration_no_check = "SELECT * FROM doctor_registration WHERE $registration_no_column = '$EncryptedRegistration_no';";
+        $sql_nmc_no_check = "SELECT * FROM doctor_registration WHERE $nmc_no_column = '$EncryptedNmc_no';";
         $sql_email_check = "SELECT * FROM doctor_registration WHERE $email_column = '$EncryptedEmail';";
         $sql_phn_check = "SELECT * FROM doctor_registration WHERE $contact_number_column = '$EncryptedPhonenumber';";
-            $query_registration_no_check = mysqli_query($con, $sql_registration_no_check);
+            $query_nmc_no_check = mysqli_query($con, $sql_nmc_no_check);
             $query_email_check = mysqli_query($con, $sql_email_check);
             $query_phn_check = mysqli_query($con, $sql_phn_check);
             // checking if the email is already used
@@ -56,15 +56,15 @@ if(isset($_POST['signup'])){
             else if(mysqli_num_rows($query_phn_check) > 0){
                 header("location: ./doctor_signup.php?inputError=AlreadyUserContactNumber&infoBack=noEmail&first_nameB=$first_name&contact_numberB=$contact_number&addressB=$address");
             }
-            else if(mysqli_num_rows($query_registration_no_check) > 0){
-                header("location: ./doctor_signup.php?inputError=AlreadyUserRegistrationNumber&infoBack=noEmail&first_nameB=$first_name&contact_numberB=$contact_number&addressB=$address");
+            else if(mysqli_num_rows($query_nmc_no_check) > 0){
+                header("location: ./doctor_signup.php?inputError=AlreadyUserNmcNumber&infoBack=noEmail&first_nameB=$first_name&contact_numberB=$contact_number&addressB=$address");
             }
 
 
             else{
             
                 $sql = 
-                    "INSERT INTO doctor_registration($registration_no_column,$first_name_column,$last_name_column, $email_column, $password_column, $activation_code_column, $email_verified_column, $contact_number_column, $address_column) VALUES('$registration_no','$first_name','$last_name', '$EncryptedEmail', '$hashedPassword', '$activation_code', 'not verified', '$EncryptedPhonenumber','$address')";
+                    "INSERT INTO doctor_registration($nmc_no_column,$first_name_column,$last_name_column, $email_column, $password_column, $activation_code_column, $email_verified_column, $contact_number_column, $address_column) VALUES('$nmc_no','$first_name','$last_name', '$EncryptedEmail', '$hashedPassword', '$activation_code', 'not verified', '$EncryptedPhonenumber','$address')";
 
                 mysqli_query($con, $sql);
                 if(mysqli_affected_rows($con)){

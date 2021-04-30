@@ -184,8 +184,8 @@ hr {
       <p>Please fill in this form to create an account.</p>
     
       <hr>
-      <br><label for="registration_no">Hospital's Registration Number</label>
-      <input type="text" name="registration_no" required <?php if (isset($_GET['infoBack'])) { echo "value='$registration_no'";} ?>>
+      <br><label for="nmc_no">Hospital's NMC Number</label>
+      <input type="text" name="nmc_no" required <?php if (isset($_GET['infoBack'])) { echo "value='$nmc_no'";} ?>>
        <br>
       <label for="first_name"><b>First Name</b></label>
       <input type="text" placeholder="Enter your first name" name="first_name" required <?php if (isset($_GET['infoBack'])) { echo "value='$first_name'";} ?> >
@@ -195,7 +195,7 @@ hr {
       <label for="email"><b>Email</b></label>
       <input type="email" placeholder="Enter Email" name="email" required <?php if (isset($_GET['infoBack'])) { echo "value='$email'";} ?> > 
       <label for="password"><b>Password</b></label>
-      <input type="password" placeholder="Enter password"name="password" required > 
+      <input type="password" placeholder="Enter password" name="password" required > 
       <br>
       <label for="confirm_password"><b> Confirm Password</b></label>
       <input type="password"  placeholder="Enter Password Again" name="confirm_password" required > <br>
@@ -217,7 +217,7 @@ hr {
       
     </div>
   </form>
-</div>
+<!-- </div> -->
 
 <script>
 // Get the modal

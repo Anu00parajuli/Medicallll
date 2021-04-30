@@ -4,6 +4,7 @@
 
 
 // users table
+$nmc_no_column="nmc_no";
 $registration_no_column = "registration_no";
 $first_name_column = "first_name";
 $last_name_column = "last_name";
