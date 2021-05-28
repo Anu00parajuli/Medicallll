@@ -1,6 +1,9 @@
 <?php
 include('./tables_columns_name.php');
 require "./connection.php";
+// include("./encryption.php");
+
+
 function protect($data){
     return trim(strip_tags(addslashes($data)));
 }
@@ -22,55 +25,38 @@ if(isset($_POST['login'])){
     $str = "/6G6F;WvK7;s{au/6G6F;WvK7;s{au";
     $key = md5($str);
 
-    $username_sql = "SELECT $password_column, $emailVerification_column FROM doctor_registration WHERE $nmc_no_column = '$user';";
+    $username_sql = "SELECT $password_column, $email_verified_column  FROM doctor_registration WHERE $nmc_no_column = '$user';";
     $result = mysqli_query($con, $username_sql);
     
     if(mysqli_num_rows($result) > 0){
         // $row = mysqli_fetch_assoc($result);
         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
-            
+        
         foreach($row as $data){
             // checking if the email is verified or not
-            if($data[$emailVerification_column] == "not verified"){
+            if($data[$email_verified_column] == "not verified"){
                 header("location: ./doctor_login.php?error=EmailNotVerified#loginForm");
                 die();
             }
 
             if(password_verify($Password,$data[$password_column])){
+                session_start();
+                
                 header("location: ./doctor_homepage.php?Logged");
+                $_SESSION['nmc_no'] = $data['nmc_no'];
                 die();
             }else{
-                header("location: ./doctor_homepage.php?inputError=WrongPass#loginForm");
+                // echo("hi");
+                header("location: ./doctor_login.php?inputError=WrongPass#loginForm");
             }
         }
     }else{
-        $user = encryptData($user, $key, $str);    
-        $email_sql = "SELECT $password_column, $emailVerification_column  FROM doctor_registration WHERE $email_column = '$user';";
-        $result = mysqli_query($connect, $email_sql);
-        
-        if(mysqli_num_rows($result) > 0){
-            $row = mysqli_fetch_assoc($result);
-
-            // checking if the email is verified or not
-            if($row[$emailVerification_column] == "not verified"){
-                header("location: ./doctor_login.php?error=EmailNotVerified#loginForm");
-                die();
-            }
-
-            //session_start();
-            //$_SESSION['uId'] = $row['uId'];
-
-            if(password_verify($Password,$row[$password_column])){
-                header("location: ./doctor_homepage.php?Logged");
-            }else{
-                header("location: ./doctor_login.php?inputError=WrongRegistrationNumberORPass#loginForm");
-            }
-        }else{
-            header("location: ./doctor_homepage.php?inputError=WrongRegistrationNumberOrUser#loginForm");
-        }
+        header("location: ./doctor_login.php?error=NoSuchUser")
     }
+       
 
 }else{
+   // echo("hi") ;
     header("location:./doctor_login.php?error=IllegalWay");
 }
 

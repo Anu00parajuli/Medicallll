@@ -44,21 +44,24 @@ $encrypted_email = encryptData( $_SESSION['formdata']['email'], $key, $str);
 // $encrypted_email = $_SESSION['formdata']['email'];
 
 
-$sql = "SELECT $activation_code_column FROM admin_registration WHERE $email_column = '$encrypted_email'";
+$sql = "SELECT $activation_code_column FROM admin_registration WHERE email = '$encrypted_email'";
 // echo $sql ;
+// die();
 $query = mysqli_query($con, $sql);
-var_dump(mysqli_query($con, $sql)) ;
+//var_dump(mysqli_query($con, $sql)) ;
 $row = mysqli_fetch_assoc($query);
 // var_dump($row) ;
 $activeCode = $row[$activation_code_column];
-// var_dump(mysqli_num_rows($query)) ;
+var_dump(mysqli_num_rows($query)) ;
 // 
 // die() ;
 if(mysqli_num_rows($query)){
     echo "Sending mail from here" ;
     require './PHPMailer/PHPMailerAutoload.php';
-
-    $url = "http://localhost/MedicalArchive/MediiiArchive/adminVerifyUser.php?activation_code=$activeCode";
+    
+    $url = "http://".$_SERVER['HTTP_HOST']."/MedicalArchive/MediiiArchive/adminVerifyUser.php?activation_code=$activeCode";
+    // echo($url);
+    // die();
 
     $adminEmail = 'medicalarchive2021@gmail.com';
 
@@ -66,7 +69,7 @@ if(mysqli_num_rows($query)){
     <h2>Hi, $first_name </h2>
     <p>Thank you for registeration</p>
     <p>
-        Click <a href='$url'>this</a> link to verify and log in into your account.
+        Click $url link to verify and log in into your account.
         
     </p>
     ";
@@ -102,8 +105,8 @@ if(mysqli_num_rows($query)){
         header("location: ./admin_signup.php?error=SendMailError&infoBack=full&registration_noB=$registration_no&first_nameB=$first_name&last_nameB=$last_name&contact_numberB=$contact_number&emailB=$email&addressB=$address");
     }
 }else{
-    // echo "hi";
-    header("location: ./admin_signup.php?error=NotUser");
+    //  echo "hi";
+     header("location: ./admin_signup.php?error=NotUser");
 }
 
 ?>

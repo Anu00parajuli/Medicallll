@@ -146,13 +146,13 @@ span.psw {
     </div>
 
     <div class="container">
-      <label for="registration_number"><b>Admin Registration Number</b></label>
-      <input type="text" placeholder="Enter your registration number" name="registration_number" required>
+      <label for="registration_no"><b>Admin Registration Number</b></label>
+      <input type="text" placeholder="Enter your registration number" name="registration_no" required>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-       <input type="submit" onclick="location.href='./admin_homepage.php';" value="Login" name="login" />
-      
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
+      <!--<input type="submit" onclick="location.href='./admin_homepage.php';" value="Login" name="login" /> -->
+       <input type="submit" value="Login" name="login" />
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>

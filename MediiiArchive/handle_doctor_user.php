@@ -64,8 +64,9 @@ if(isset($_POST['signup'])){
             else{
             
                 $sql = 
-                    "INSERT INTO doctor_registration($nmc_no_column,$first_name_column,$last_name_column, $email_column, $password_column, $activation_code_column, $email_verified_column, $contact_number_column, $address_column) VALUES('$nmc_no','$first_name','$last_name', '$EncryptedEmail', '$hashedPassword', '$activation_code', 'not verified', '$EncryptedPhonenumber','$address')";
-
+                    "INSERT INTO doctor_registration($nmc_no_column,$first_name_column,$last_name_column, email, $password_column, $activation_code_column, $email_verified_column, $contact_number_column, $address_column) VALUES('$nmc_no','$first_name','$last_name', '$EncryptedEmail', '$hashedPassword', '$activation_code', 'not verified', '$EncryptedPhonenumber','$address')";
+                        // echo $sql ;
+                        // die();
                 mysqli_query($con, $sql);
                 if(mysqli_affected_rows($con)){
                     // $registration_no = "SELECT registration_no FROM admin_registration WHERE $email_column = '$EncryptedEmail'";
@@ -73,6 +74,8 @@ if(isset($_POST['signup'])){
                     // $row = mysqli_fetch_assoc($execute);
                     // $registration_no = $row['registration_no'];
                        if(mysqli_affected_rows($con)){
+                            //  echo "haai";
+                            //  die();
                             header("location: ./doctorEmailVerification.php?Email=$email&first_name=$first_name&contact_numberB=$contact_number&addressB=$address&$email=$EncryptedEmail");
                     }else{
                         header("location: ./doctor_signup.php?error=NotInserted&infoBack=full&first_nameB=$first_name&contact_numberB=$contact_number&addressB=$address");

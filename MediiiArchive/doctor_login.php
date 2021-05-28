@@ -132,27 +132,27 @@ span.psw {
 </style>
 </head>
 <body>
-
+<!--
 <h2> <center>Medical Archive</center></h2>
 
 <center><button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Doctor's Login page</button></center>
 
-<div id="id01" class="modal">
+<div id="id01" class="modal"> -->
   
-  <form class="modal-content animate" action="/action_page.php" method="post">
+  <form action="./doctor_handle_login_user.php" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="img_avatar2.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <label for="nmc_no"><b>Username</b></label>
+      <input type="text" placeholder="Enter NMC no" name="nmc_no" required>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-       <input type="button" onclick="location.href='./doctor_homepage.php';" value="Login" />
-      <button type="submit">Login</button> 
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
+      <input type="submit"  value="Login" name="login" />
+     
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -163,7 +163,7 @@ span.psw {
       <span > <input type="button" onclick="location.href='./doctor_signup.php';" value= "Create a new account" /> </span>
     </div>
   </form>
-</div>
+
 
 <script>
 // Get the modal

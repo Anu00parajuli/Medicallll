@@ -1,6 +1,6 @@
 <?php
 session_start() ;
-include ('./tables_columns_name.php');
+require ('./tables_columns_name.php');
 require ('./connection.php');
 function protect($data){
     return trim(strip_tags(addslashes($data)));
@@ -16,7 +16,7 @@ function encryptData($data, $key, $str){
 if(isset($_POST['signup'])){
 
     $_SESSION['formdata'] = $_POST ;
-
+    
     // data from the signup form
     $registration_no =$_POST['registration_no'];
     $first_name = protect($_POST['first_name']);
@@ -42,7 +42,7 @@ if(isset($_POST['signup'])){
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $sql_registration_no_check = "SELECT * FROM admin_registration WHERE $registration_no_column = '$EncryptedRegistration_no';";
-        $sql_email_check = "SELECT * FROM admin_registration WHERE $email_column = '$EncryptedEmail';";
+        $sql_email_check = "SELECT * FROM admin_registration WHERE email = '$EncryptedEmail';";
         $sql_phn_check = "SELECT * FROM admin_registration WHERE $contact_number_column = '$EncryptedPhonenumber';";
             $query_registration_no_check = mysqli_query($con, $sql_registration_no_check);
             $query_email_check = mysqli_query($con, $sql_email_check);
@@ -64,10 +64,10 @@ if(isset($_POST['signup'])){
             else{
             
                 $sql = 
-                    "INSERT INTO admin_registration($registration_no_column,$first_name_column,$last_name_column, $email_column, $password_column, $activation_code_column, $email_verified_column, $contact_number_column, $address_column) VALUES('$registration_no','$first_name','$last_name', '$EncryptedEmail', '$hashedPassword', '$activation_code', 'not verified', '$EncryptedPhonenumber','$address')";
+                    "INSERT INTO admin_registration($registration_no_column,$first_name_column,$last_name_column, email, $password_column, $activation_code_column, $email_verified_column, $contact_number_column, $address_column) VALUES('$registration_no','$first_name','$last_name', '$EncryptedEmail', '$hashedPassword', '$activation_code', 'not verified', '$EncryptedPhonenumber','$address')";
 
-                    // echo $sql ;
-                    // die() ;
+                    //  echo $sql ;
+                     //die() ;
 
                 mysqli_query($con, $sql);
                 if(mysqli_affected_rows($con)){

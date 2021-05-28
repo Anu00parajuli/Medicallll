@@ -31,17 +31,18 @@ function protect($data){
 
 
 
-$sql = "SELECT $activation_code_column FROM doctor_registration WHERE $email_column = '$encrypted_email'";
+$sql = "SELECT $activation_code_column FROM doctor_registration WHERE $emailVerification_column = '$encrypted_email'";
 $query = mysqli_query($con, $sql);
-var_dump(mysqli_query($con, $sql)) ;
+// var_dump(mysqli_query($con, $sql)) ;
 $row = mysqli_fetch_assoc($query);
 $activeCode = $row[$activation_code_column];
+var_dump(mysqli_query($con, $sql)) ;
 
 if(mysqli_num_rows($query)){
     echo "Sending mail from here" ;
     require './PHPMailer/PHPMailerAutoload.php';
 
-    $url = "http://localhost/MedicalArchive/MediiiArchive/doctorVerifyUser.php?activation_code=$activeCode";
+    $url = "http://".$_SERVER['HTTP_HOST']."/MedicalArchive/MediiiArchive/doctorVerifyUser.php?activation_code=$activeCode";
 
     $doctorEmail = 'medicalarchive2021@gmail.com';
 
@@ -49,8 +50,8 @@ if(mysqli_num_rows($query)){
     <h2>Hi, $first_name </h2>
     <p>Thank you for registeration</p>
     <p>
-        Click this link to verify and log in into your account
-        $url
+        Click $url link to verify and log in into your account
+        
     </p>
     ";
 
@@ -85,8 +86,8 @@ if(mysqli_num_rows($query)){
         header("location: ./doctor_signup.php?error=SendMailError&infoBack=full&nmc_noB=$nmc_no&nameB=$first_name&last_nameB=$last_name&contact_numberB=$contact_number&emailB=$email&addressB=$address");
     }
 }else{
-    // echo "hi";
-    header("location: ./doctor_signup.php?error=NotUser");
+    echo "hi";
+    // header("location: ./doctor_signup.php?error=NotUser");
 }
 
 ?>
